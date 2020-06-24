@@ -1,0 +1,85 @@
+
+.addScroll {
+    height: 300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.wishlist {
+    background: #edf3ed;
+    padding: 8px 10px;
+    border-radius: 7px;
+}
+.wishlistback{
+    background: #1454f7;
+    padding: 8px 10px;
+    border-radius: 7px;
+}
+
+.fa-heart {
+    color: #020d02;
+}
+.fa.fa-star {
+    color: #b3b30d;
+}
+
+.wishlist:hover {
+    background: #b0e8b0;
+}
+.wishlist:hover .fa.fa-heart {
+    color: #020d02;
+}
+
+.owl-prev {
+    position: absolute;
+    left: 16px;
+    bottom: 44%;
+}
+.owl-next {
+    position: absolute;
+    right: -18px;
+    bottom: 44%;
+}
+.owl-prev span {
+    font-size: 32px;
+    background: rgba(150, 145, 145, 0.89);
+    display: inline-block;
+    width: 47px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: -32px;
+}
+.owl-next span {
+    font-size: 32px;
+    background: rgba(150, 145, 145, 0.89);
+    display: inline-block;
+    width: 47px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: -32px;
+}
+.owl-next span:hover{
+    background: rgba(37, 36, 36, 0.89);
+}
+.owl-prev span:hover{
+    background: rgba(37, 36, 36, 0.89);
+}
+.owl-theme .owl-nav [class*="owl-"]:hover{
+background: none;
+}
+.owl-dots{
+    display: none;
+}
+.product {
+    /* background: #ddd9d6; */
+    width: 198px;
+    padding: 9px;
+    padding-bottom: 18px;
+    border: 1px solid #d9cbcb;
+}
+
+.owl-carousel .owl-item img {
+    display: block;
+    width: 66%;
+    height: 159px;
+}
+
