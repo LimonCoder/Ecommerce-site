@@ -18,7 +18,7 @@ class SendEmail{
         $this->ReseterName = $name;
     }
 
-    public Function Send(){
+    public function Send(){
         $rand = rand(11111111,99999990);
         $vkey = substr($rand,0,6);
 
@@ -65,6 +65,17 @@ class SendEmail{
                 return false;
             }
 
+        }
+    }
+
+    public function NullSet(){
+
+        $query = "UPDATE users SET forgetKey= NULL WHERE email = '".$this->email."'";
+        $results = mysqli_query($this->sqli->sql,$query);
+        if ($results){
+            return true;
+        }else{
+            return false;
         }
     }
 
