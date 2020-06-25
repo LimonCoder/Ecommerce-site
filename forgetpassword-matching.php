@@ -1,3 +1,8 @@
+
+<?php
+session_start();
+if (isset($_SESSION['ReseterEmail'])):
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -72,7 +77,7 @@
     </div>
 
 <script>
-    var limit = 120;
+    var limit = 10;
 
     function setup() {
         noCanvas();
@@ -91,8 +96,18 @@
         function conuter() {
             var cl = --limit;
             if(timelimit(cl) == "00:00"){
+
                 clearInterval(myvar);
                 $("#timer").html(timelimit(cl));
+                $.ajax({
+                    url:'includes/email-null.php',
+                    type:'post',
+                    success:function (res) {
+                        if (res == 1){
+                            $("#resetpassword").attr("disabled","disabled");
+                        }
+                    }
+                })
 
             }else{
                 $("#timer").html(timelimit(cl));
@@ -115,3 +130,6 @@
 </script>
 </body>
 </html>
+<?php else: ?>
+    <script>window.open('forgot-password.php','_self')</script>
+<?php endif;    ?>

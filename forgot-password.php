@@ -3,17 +3,21 @@ require ('includes/PHPMailer/PHPMailerAutoload.php');
 include ('Classess/database.php');
 include('Classess/SendEmail.php');
 
-if(isset($_POST['Submit']))
+session_start();
+
+if(isset($_POST['Submit'])){
 
     if (!empty($_POST['email'])){
-        $email = $_POST['email'];
+        $_SESSION['ReseterEmail']  = $_POST['email'];
     }else{
         $emptyemail = "Email empty";
     }
 
-    if (isset($email)){
-        $object = new SendEmail($email);
-        $object->SetResetName("Ariyan Limon");
+    if (isset($_SESSION['ReseterEmail'])){
+        $object = new SendEmail($_SESSION['ReseterEmail']);
+        if (!empty($_POST['resetername'])){
+            $object->SetResetName($_POST['resetername']);
+        }
         if ($object->Send()){
             echo "<script>window.open('forgetpassword-matching.php')</script>";
         }else{
@@ -23,7 +27,7 @@ if(isset($_POST['Submit']))
 
 
 
-
+}
 
 ?>
 
@@ -129,13 +133,25 @@ if(isset($_POST['Submit']))
                 dataType:'json',
                 success:function (res) {
                     var tr = "";
+                    var nametr = "";
                     $(res).each(function (index, value) {
-                        tr += `<div class="form-check">
-                                <input class="form-check-input" type="radio" name="email" id="exampleRadios2" value="${value}">
-                                <label class="form-check-label" for="exampleRadios2">
-                                    ${value}
-                                </label>
-                            </div>`;
+
+
+                        var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+                        //var address = document.getElementById[email].value;
+                        if (reg.test(value) == true)
+                        {
+                            tr += `<div class="form-check">
+                                    <input class="form-check-input" type="radio" name="email" id="exampleRadios2" value="${value}">
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        ${value}
+                                    </label>
+                                </div>`;
+                        }else{
+                           nametr =`<input class="form-check-input" type="hidden" name="resetername"  value="${value}">`;
+                        }
+
+
 
 
 
@@ -144,8 +160,10 @@ if(isset($_POST['Submit']))
                                 <input type="submit" class="btn btn-primary" name="Submit" value="Submit">
                             </div>`;
 
-                    $("#resetform").html(tr);
+                    $("#resetform").html(tr + nametr);
                     $("#myModal").modal('show');
+
+
                 }
             })
 
