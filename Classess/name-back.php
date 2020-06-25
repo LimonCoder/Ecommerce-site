@@ -10,6 +10,9 @@ if (isset($_POST['name'])){
         $arr[] = $row['email'];
     }
 
+    $arr[] = $_POST['name'];
+
+
     echo json_encode($arr);
 
 
