@@ -9,6 +9,7 @@ if(isset($_POST['Submit'])){
 
     if (!empty($_POST['email'])){
         $_SESSION['ReseterEmail']  = $_POST['email'];
+        $_SESSION['active'] = 1;
     }else{
         $emptyemail = "Email empty";
     }
@@ -19,7 +20,7 @@ if(isset($_POST['Submit'])){
             $object->SetResetName($_POST['resetername']);
         }
         if ($object->Send()){
-            echo "<script>window.open('forgetpassword-matching.php')</script>";
+            echo "<script>window.open('forgetpassword-matching.php','_self')</script>";
         }else{
             echo "Password faild";
         }

@@ -1,7 +1,8 @@
 
 <?php
 session_start();
-if (isset($_SESSION['ReseterEmail'])):
+
+if (isset($_SESSION['ReseterEmail']) & isset($_SESSION['active'])):
 ?>
 <!doctype html>
 <html lang="en">
@@ -55,8 +56,9 @@ if (isset($_SESSION['ReseterEmail'])):
 
                                     <div class="form-group">
                                         <div class="input-group">
+
                                             <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                            <input id="username"  placeholder="Varification Code here :" class="form-control"  type="text">
+                                            <input id="forgetcode"  placeholder="Varification Code here :" class="form-control"  type="text">
                                         </div>
                                     </div>
                                     <div class="form-group resetbutton">
@@ -77,7 +79,9 @@ if (isset($_SESSION['ReseterEmail'])):
     </div>
 
 <script>
-    var limit = 10;
+    var limit = 120;
+
+
 
     function setup() {
         noCanvas();
@@ -105,6 +109,7 @@ if (isset($_SESSION['ReseterEmail'])):
                     success:function (res) {
                         if (res == 1){
                             $("#resetpassword").attr("disabled","disabled");
+                            window.open('forgot-password.php','_self');
                         }
                     }
                 })
@@ -124,12 +129,54 @@ if (isset($_SESSION['ReseterEmail'])):
     $(document).ready(function () {
         $("#reset-form").submit(function (event) {
             event.preventDefault();
+            var forgetCode = $("#forgetcode").val();
+
+            if(forgetCode.length == 6){
+                $("#forgetcode").css("border-color","green")
+                $.ajax({
+                    url:'includes/email-code.php',
+                    type:'post',
+                    data:{
+                        key:forgetCode
+                    },
+                    success:function (res) {
+                        if (res == 1){
+                            window.open("new-password.php","_self");
+                        }else{
+                            window.open("forgot-password","_self");
+                        }
+                    }
+                })
+
+            }else{
+                $("#forgetcode").css("border-color","red");
+                alert("Varification Code 6 digit");
+            }
+
+
+
+
+
+
+
         })
     })
+
+
+
+
+
+
+
+
+
+
 
 </script>
 </body>
 </html>
-<?php else: ?>
+<?php
+ unset($_SESSION['active']);
+else: ?>
     <script>window.open('forgot-password.php','_self')</script>
 <?php endif;    ?>

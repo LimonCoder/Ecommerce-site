@@ -79,6 +79,21 @@ class SendEmail{
         }
     }
 
+    public function ForgetKeyMatch($key){
+
+        $query = "SELECT users.forgetKey FROM users WHERE email = '".$this->email."'";
+        $res = $this->sqli->sql->query($query);
+        if ($res->field_count > 0){
+            $row = $res->fetch_array();
+            $fkey =  $row['forgetKey'];
+            if ($fkey == $key){
+                return 1;
+            }else{
+                return 0;
+            }
+        }
+    }
+
 }
 
 
